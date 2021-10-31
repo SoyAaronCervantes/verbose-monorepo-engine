@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "jby7we8tud777y6kpwvzctb8zyyz29": {
+      "hosting": {
+        "@apps/auth": [
+          "soyaaroncervantes-auth"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "jby7we8tud777y6kpwvzctb8zyyz29"
+  }
+}

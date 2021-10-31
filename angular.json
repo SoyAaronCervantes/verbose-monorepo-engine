@@ -1,10 +1,166 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1,
+  "version": 2,
   "cli": {
+    "analytics": "d9d2a589-5c04-4bf9-9677-c43528ccc0f3",
+    "defaultCollection": "@angular-eslint/schematics",
     "packageManager": "yarn"
   },
   "newProjectRoot": "projects",
   "projects": {
-  }
+    "@apps/auth": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
+      "root": "projects/apps/auth",
+      "sourceRoot": "projects/apps/auth/src",
+      "prefix": "auth",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/auth",
+            "index": "projects/apps/auth/src/index.html",
+            "main": "projects/apps/auth/src/main.ts",
+            "polyfills": "projects/apps/auth/src/polyfills.ts",
+            "tsConfig": "projects/apps/auth/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/apps/auth/src/favicon.ico",
+              "projects/apps/auth/src/assets"
+            ],
+            "styles": [
+              "projects/apps/auth/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "projects/apps/auth/src/environments/environment.ts",
+                  "with": "projects/apps/auth/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "@apps/auth:build:production"
+            },
+            "development": {
+              "browserTarget": "@apps/auth:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "@apps/auth:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/apps/auth/src/test.ts",
+            "polyfills": "projects/apps/auth/src/polyfills.ts",
+            "tsConfig": "projects/apps/auth/tsconfig.spec.json",
+            "karmaConfig": "projects/apps/auth/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/apps/auth/src/favicon.ico",
+              "projects/apps/auth/src/assets"
+            ],
+            "styles": [
+              "projects/apps/auth/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "@apps/auth:build:production",
+            "firebaseProject": "jby7we8tud777y6kpwvzctb8zyyz29",
+            "firebaseHostingSite": "soyaaroncervantes-auth"
+          }
+        }
+      }
+    },
+    "@libs/auth": {
+      "projectType": "library",
+      "root": "projects/libs/auth",
+      "sourceRoot": "projects/libs/auth/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/libs/auth/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/libs/auth/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/libs/auth/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/libs/auth/src/test.ts",
+            "tsConfig": "projects/libs/auth/tsconfig.spec.json",
+            "karmaConfig": "projects/libs/auth/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/libs/auth/**/*.ts",
+              "projects/libs/auth/**/*.html"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "@apps/auth"
 }
