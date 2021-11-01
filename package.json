@@ -2,17 +2,16 @@
   "name": "monorepo",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "build:libs": "lerna run build",
     "apps:auth:start": "ng s @apps/auth",
     "apps:auth:build": "ng b @apps/auth",
     "apps:auth:watch": "ng b @apps/auth --watch --configuration development",
     "apps:auth:test": "ng test @apps/auth",
     "apps:auth:lint": "ng lint @apps/auth",
-    "docs:json": "compodoc -p ./tsconfig.json -e json -d .",
-    "storybook": "yarn docs:json && start-storybook -p 6006",
     "build-storybook": "yarn docs:json && build-storybook",
-    "lint": "ng lint"
+    "build:libs": "lerna run build",
+    "docs:json": "compodoc -p ./tsconfig.json -e json -d .",
+    "ng": "ng",
+    "storybook": "yarn docs:json && start-storybook -p 6006"
   },
   "workspaces": {
     "packages": [
